@@ -1,0 +1,17 @@
+The data files with the particle's trajectories are in the folders phia0.008, phia0.1, and phia0.2. Each folder corresponds to different density of active particles. In the folder you will find a data file .dat for different activities (the activity is specified in the name of the file Fa).
+
+Structure of the data file:
+
+Column 1      Column 2     Column 3    Column 4
+Particle ID     Type          x            y
+
+type 1 and 2: Active particles (type A and B respectively)
+type 3 and 4: Passive particles (type A and B respectively)
+
+Total number of particles: Ntot=1000 of which 650 are A-type and 350 B-type (this is for the LJ potential to avoid crystallization). 
+The density of active particles is specified in the name of the folder/file (number of active particles Na=phia*Ntot and of these active particles 65% are A-type and 35% are B-type). In the files you have multiple snapshots, that's why you the files have 2x10^6 rows (we have 2000 different independent snapshots).
+
+ML:
+Once you have a file (e.g. CSV) with the features you can do ML analysis:
+- Binary_classification_of_active_code.py: Example code: you can find two ML models: (1) Multi-layer perceptron, (2) Gradient boosting algorithm. In the file, you can find the links to get more info about the models. At the end of the code, you can find examples of what you can plot to evaluate the ML model. 
+- If your data file is large you can use other formats like pickle. A code to convert a CSV file in a pickle is in the code 'prepare_XandY.py' 
