@@ -101,6 +101,7 @@ if model_flag==0:
 elif model_flag==1:
     print('\n\n*** Using a gradient boosting algorithm')
         # This is a more advanced algorithm that is explained here:https://lightgbm.readthedocs.io/en/latest/pythonapi/lightgbm.LGBMClassifier.html
+        # One of the main reasons lgmb is preferable to scikitlearn GradientBoostClassifier is that it uses parallelization, i.e. it allows us to use a higher % of the CPU
     model = lgb.LGBMClassifier(learning_rate=0.01,num_leaves=100,max_depth=15, early_stopping_rounds=10, num_iterations=3000, random_state=42)
     
     model.fit(df_train_x,df_train_y,eval_set=[(df_train_x,df_train_y),(df_test_x,df_test_y)],
