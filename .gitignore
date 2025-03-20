@@ -2,4 +2,6 @@
 \phia0.2
 \phia0.008
 \myenv
+\myenv1
 *.png
+tests

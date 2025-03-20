@@ -4,6 +4,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import f1_score,accuracy_score,roc_auc_score
 import sys
 import joblib
+import numpy as np
 
 #Returns accuracy,auc,f1_score
 def score(y,pred):
@@ -27,9 +28,16 @@ def plot_score_Fa_depend(fa_list,density):
     plt.scatter(fa_list,auc_list)
     plt.scatter(fa_list,f1_list)
     plt.legend(['Accuracy','ROC AUC score', 'F1 score'])
+    plt.xlabel('Fa value')
+    plt.ylabel('Score')
     plt.show()
+    output_file='scoreFadependent.txt'
+    df=pd.DataFrame(columns=[fa_list,accuracy_list,auc_list,f1_list])
+    df.to_csv(output_file, sep=" ", index=False)
+
     return 1
     
 density=sys.argv[1]
 fa_list=[100,85,75,60,50,40,20,15,10,5,0.5]
 plot_score_Fa_depend(fa_list,density)
+
