@@ -16,7 +16,7 @@ def plot_score_density_depend(fa,density_list):
     f1_list=[]
 
     for density in density_list:
-        model,features,target,df_test_y,df_test_x=joblib.load(f"phia{density}/gb-model-{density}-Fa{fa}.pkl")   
+        model,features,target,df_test_y,df_test_x=joblib.load(f"phia{density}/gb-model-{density}-Fa{fa}-balanced.pkl")   
         pred=model.predict(df_test_x)
         accuracy,auc,f1=score(df_test_y,pred)
         accuracy_list.append(accuracy)
@@ -28,6 +28,10 @@ def plot_score_density_depend(fa,density_list):
     plt.scatter(density_list,f1_list)
     plt.legend(['Accuracy','ROC AUC score', 'F1 score'])
     plt.show()
+    output_file='scorephiadependent-balanced.txt'
+    df=pd.DataFrame(columns=[density_list,accuracy_list,auc_list,f1_list])
+    df.to_csv(output_file, sep=" ", index=False)
+
     return 1
     
 fa=sys.argv[1]

@@ -19,6 +19,7 @@ from sklearn.model_selection import train_test_split
 import shap
 import joblib
 import pickle
+from imblearn.over_sampling import SMOTE
 
 
 def gb_model(df_train_x,df_train_y,df_test_x,df_test_y):
@@ -43,25 +44,29 @@ def exp(density,fa):
     data = pd.read_csv(input_file, delimiter=' ',names=cols_names)
 
     target='activity'
+    smote=SMOTE(sampling_strategy=0.5) #that's how we balance the data
 
     df_train, df_test = train_test_split(data, random_state=50, test_size=0.3)
     df_train_y = df_train[target].copy().astype('int')
     df_train.drop(columns=target, inplace=True)
     df_train_x = df_train
+    df_train_x,df_train_y=smote.fit_resample(df_train_x,df_train_y)
 
     df_test_y = df_test[target].copy().astype('int')
     df_test.drop(columns=target, inplace=True)
     df_test_x = df_test
+    df_test_x,df_test_y=smote.fit_resample(df_test_x,df_test_y)
     model=model_method(df_train_x,df_train_y,df_test_x,df_test_y)
     features=list(df_test_x.columns)
 
-    joblib.dump(value=[model,features,target,df_test_y,df_test_x],filename=f"phia{density}/gb-model-{density}-Fa{fa}.pkl")
+    joblib.dump(value=[model,features,target,df_test_y,df_test_x],filename=f"phia{density}/gb-model-{density}-Fa{fa}-balanced.pkl")
     #We create a .pkl file that saves all the useful values of the model so we can later score it and make predictions without training it another time
     return 1
 
 exp(density,fa)
 
 #If we want to obtain models for a list of fa we can run:
-# fa_list=[]
+# fa_list=[50]
 # for fa in fa_list:
 #     exp(density,fa)
+

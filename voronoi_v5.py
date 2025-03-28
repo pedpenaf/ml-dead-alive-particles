@@ -170,7 +170,7 @@ output_file=f"phia{density}/particles-features-{density}-Fa{fa}.txt"
 
 # File parameters
 def n_rows(input_file):
-    df=pd.read_csv(input_file, sep='\s+')
+    df=pd.read_csv(input_file, sep='\s+',names=["label", "type", "x", "y"])
     return df.shape[0]
 num_rows = n_rows(input_file)  # Total number of rows
 rows_per_image = 1000    
